@@ -183,7 +183,7 @@ public class FitnesseBuilder extends Builder {
      */
 	@Override
     public DescriptorImpl getDescriptor() {
-        return (DescriptorImpl)super.getDescriptor();
+        return (DescriptorImpl) super.getDescriptor();
     }
 	
     /**

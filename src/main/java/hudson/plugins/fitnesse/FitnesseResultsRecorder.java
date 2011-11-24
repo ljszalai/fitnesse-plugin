@@ -119,7 +119,7 @@ public class FitnesseResultsRecorder extends Recorder {
      *  See <tt>src/main/resources/hudson/plugins/fitnesse/FitnesseResultsRecorder/config.jelly</tt>
      */
     @Extension
-	public static final class DescriptorImpl extends BuildStepDescriptor<Publisher> {
+	public static final class DescriptorImpl extends BuildStepDescriptor<hudson.tasks.Publisher> {
 		
 		public FormValidation doCheckFitnessePathToXmlResultsIn(@QueryParameter String value) throws IOException, ServletException {
         	if (value.length()==0)
