@@ -110,6 +110,85 @@ public class FitnesseExecutorTest {
 	}
 
 	@Test
+	public void javaCmdShouldNotCareJAVAHOMEWhenAlternativeJREPresent() throws IOException {
+		File javaHome_env = File.createTempFile("JavaHome", "");
+		String javaHome_form = "d:\\Java\\jre6"; 
+		executor = getExecutorForBuilder(
+				new String[] {FitnesseBuilder.JAVA_ALTERNATIVE_VM, FitnesseBuilder.PATH_TO_ROOT, FitnesseBuilder.PATH_TO_JAR, FitnesseBuilder.FITNESSE_PORT},
+				new String[] {javaHome_form, getTestResourceFitNesseRoot(), getTestResourceFitnesseJar(), "9876"}
+				);
+		
+		EnvVars envVars = new EnvVars();
+		envVars.put("JAVA_HOME", javaHome_env.getAbsolutePath());
+		FilePath workingDirectory = new FilePath(new File(TMP_DIR));
+		ArrayList<String> cmd = executor.getJavaCmd(workingDirectory, envVars);
+		
+		Assert.assertEquals(new File(new File(javaHome_form, "bin"), "java").getAbsolutePath(),	cmd.get(0));
+		Assert.assertFalse(new File(new File(javaHome_env, "bin"), "java").getAbsolutePath().equalsIgnoreCase(cmd.get(0)));
+		Assert.assertEquals("-jar", cmd.get(1));
+		Assert.assertEquals(getTestResourceFitnesseJar(), cmd.get(2));
+		Assert.assertEquals("-d", cmd.get(3));
+		Assert.assertEquals(new File(getTestResourceFitNesseRoot()).getParent(), cmd.get(4));
+		Assert.assertEquals("-r", cmd.get(5));
+		Assert.assertEquals("FitNesseRoot", cmd.get(6));
+		Assert.assertEquals("-p", cmd.get(7));
+		Assert.assertEquals("9876", cmd.get(8));
+	}
+
+	@Test
+	public void javaCmdShouldCareJAVAHOMEWhenAlternativeJRENotGiven() throws IOException {
+		File javaHome_env = File.createTempFile("JavaHome", "");
+		String javaHome_form = ""; 
+		executor = getExecutorForBuilder(
+				new String[] {FitnesseBuilder.JAVA_ALTERNATIVE_VM, FitnesseBuilder.PATH_TO_ROOT, FitnesseBuilder.PATH_TO_JAR, FitnesseBuilder.FITNESSE_PORT},
+				new String[] {javaHome_form, getTestResourceFitNesseRoot(), getTestResourceFitnesseJar(), "9876"}
+				);
+		
+		EnvVars envVars = new EnvVars();
+		envVars.put("JAVA_HOME", javaHome_env.getAbsolutePath());
+		FilePath workingDirectory = new FilePath(new File(TMP_DIR));
+		ArrayList<String> cmd = executor.getJavaCmd(workingDirectory, envVars);
+		
+		Assert.assertEquals(new File(new File(javaHome_env, "bin"), "java").getAbsolutePath(),	cmd.get(0));
+		Assert.assertFalse(new File(new File(javaHome_form, "bin"), "java").getAbsolutePath().equalsIgnoreCase(cmd.get(0)));
+		Assert.assertEquals("-jar", cmd.get(1));
+		Assert.assertEquals(getTestResourceFitnesseJar(), cmd.get(2));
+		Assert.assertEquals("-d", cmd.get(3));
+		Assert.assertEquals(new File(getTestResourceFitNesseRoot()).getParent(), cmd.get(4));
+		Assert.assertEquals("-r", cmd.get(5));
+		Assert.assertEquals("FitNesseRoot", cmd.get(6));
+		Assert.assertEquals("-p", cmd.get(7));
+		Assert.assertEquals("9876", cmd.get(8));
+	}
+
+	@Test
+	public void javaCmdShouldReturnWhenJAVAHOMEAndAlternativeJRENotGiven() throws IOException {
+		File javaHome_env = File.createTempFile("JavaHome", "");
+		String javaHome_form = ""; 
+		executor = getExecutorForBuilder(
+				new String[] {FitnesseBuilder.JAVA_ALTERNATIVE_VM, FitnesseBuilder.PATH_TO_ROOT, FitnesseBuilder.PATH_TO_JAR, FitnesseBuilder.FITNESSE_PORT},
+				new String[] {javaHome_form, getTestResourceFitNesseRoot(), getTestResourceFitnesseJar(), "9876"}
+				);
+		
+		EnvVars envVars = new EnvVars();
+		envVars.put("JAVA_HOME", "");
+		FilePath workingDirectory = new FilePath(new File(TMP_DIR));
+		ArrayList<String> cmd = executor.getJavaCmd(workingDirectory, envVars);
+		
+		Assert.assertEquals("java",	cmd.get(0));
+		Assert.assertFalse(new File(new File(javaHome_env, "bin"), "java").getAbsolutePath().equalsIgnoreCase(cmd.get(0)));
+		Assert.assertFalse(new File(new File(javaHome_form, "bin"), "java").getAbsolutePath().equalsIgnoreCase(cmd.get(0)));
+		Assert.assertEquals("-jar", cmd.get(1));
+		Assert.assertEquals(getTestResourceFitnesseJar(), cmd.get(2));
+		Assert.assertEquals("-d", cmd.get(3));
+		Assert.assertEquals(new File(getTestResourceFitNesseRoot()).getParent(), cmd.get(4));
+		Assert.assertEquals("-r", cmd.get(5));
+		Assert.assertEquals("FitNesseRoot", cmd.get(6));
+		Assert.assertEquals("-p", cmd.get(7));
+		Assert.assertEquals("9876", cmd.get(8));
+	}
+
+	@Test
 	public void javaCmdShouldHandleRelativePaths() throws IOException {
 		FitnesseExecutor executor = getExecutorForBuilder(
 				new String[] {FitnesseBuilder.PATH_TO_ROOT, FitnesseBuilder.PATH_TO_JAR, FitnesseBuilder.FITNESSE_PORT},

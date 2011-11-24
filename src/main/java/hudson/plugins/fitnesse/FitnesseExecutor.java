@@ -80,8 +80,16 @@ public class FitnesseExecutor {
 
 	public ArrayList<String> getJavaCmd(FilePath workingDirectory, EnvVars envVars) {
 		String java = "java"; 
+		if (!builder.getAlternativeJava().equalsIgnoreCase("")) {
+			java = new File(new File(builder.getAlternativeJava(), "bin"), java).getAbsolutePath();
+		} else {
 		if (envVars.containsKey("JAVA_HOME"))
-			java = new File(new File(envVars.get("JAVA_HOME"), "bin"), java).getAbsolutePath();
+			if (envVars.get("JAVA_HOME").length() != 0) {
+				java = new File(new File(envVars.get("JAVA_HOME"), "bin"), java).getAbsolutePath();
+			} else {
+				//"JAVA_HOME" is present but empty -> warn the user!
+			}
+		}
 		String fitnesseJavaOpts = builder.getFitnesseJavaOpts();
 		String[] java_opts = ("".equals(fitnesseJavaOpts) ? new String[0] : fitnesseJavaOpts.split(" "));
 
