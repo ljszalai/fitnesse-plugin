@@ -46,6 +46,7 @@ public class FitnesseBuilder extends Builder {
 	public static final String PATH_TO_RESULTS = "fitnessePathToXmlResultsOut";
 	public static final String HTTP_TIMEOUT = "fitnesseHttpTimeout";
 	public static final String JAVA_WORKING_DIRECTORY = "fitnesseJavaWorkingDirectory";
+	public static final String JAVA_ALTERNATIVE_VM = "alternativeJava";
 
 	static final int _URL_READ_TIMEOUT_MILLIS = 60*1000;
 	static final String _LOCALHOST = "localhost";
@@ -86,6 +87,13 @@ public class FitnesseBuilder extends Builder {
      */
     public String getFitnesseJavaOpts() {
     	return getOption(JAVA_OPTS, "");
+    }
+    
+    /**
+     * referenced in config.jelly
+     */
+    public String getAlternativeJava() {
+    	return getOption(JAVA_ALTERNATIVE_VM, "");
     }
     
     /**
@@ -207,6 +215,10 @@ public class FitnesseBuilder extends Builder {
         	return FormValidation.ok();
         }
 
+    	public FormValidation checkAlternativeJavaOpts(@QueryParameter String value) throws IOException, ServletException {
+        	return FormValidation.ok();
+        }
+    	
         public FormValidation doCheckFitnesseJavaWorkingDirectory(@QueryParameter String value) throws IOException, ServletException {
         	if (value.length()==0)
         		return FormValidation.ok("Location of fitnesse.jar will be used as java working directory.");
