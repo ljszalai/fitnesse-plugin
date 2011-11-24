@@ -66,7 +66,7 @@ public class InputStreamDeBOMerTest {
 
 	private void assertBomSkipped(InputStream stream) throws IOException {
 		for (int i=0; i < bytes.length; ++i) {
-			Assert.assertEquals(bytes[i], stream.read());
+			Assert.assertEquals(bytes[i], (byte) stream.read());
 		}
 	}
 }

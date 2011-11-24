@@ -156,9 +156,9 @@ public class FitnesseResultsTest {
 	public void secondsAfterThanShouldDependOnCounts() {
 		FitnesseResults first = new FitnesseResults(BEFORE);
 		FitnesseResults second = new FitnesseResults(AFTER);
-		Assert.assertEquals(1000, second.millisAfter(first));
-		Assert.assertEquals(-1000, first.millisAfter(second));
-		Assert.assertEquals(0, second.millisAfter(second));
+		Assert.assertEquals(1000L, second.millisAfter(first));
+		Assert.assertEquals(-1000L, first.millisAfter(second));
+		Assert.assertEquals(0L, second.millisAfter(second));
 	}
 	
 	@Test
