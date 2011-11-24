@@ -32,7 +32,6 @@ xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
 	  <f:entry title="Alternative JRE/JDK home" 
 	  help="/descriptor/hudson.plugins.fitnesse.FitnesseBuilder/help/alternativeJava">
 	    <f:textbox name="alternativeJava" 
-        checkUrl="'descriptorByName/hudson.plugins.fitnesse.FitnesseBuilder/checkAlternativeJavaOpts?value='+toValue(this)" 
 	    value="${instance.alternativeJava}" />
 	  </f:entry>
 	
