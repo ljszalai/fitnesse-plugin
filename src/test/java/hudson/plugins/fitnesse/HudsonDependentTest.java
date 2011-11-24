@@ -1,5 +1,5 @@
 package hudson.plugins.fitnesse;
-
+/*
 import hudson.FilePath;
 import hudson.model.FreeStyleBuild;
 import hudson.model.FreeStyleProject;
@@ -160,3 +160,4 @@ public class HudsonDependentTest extends HudsonTestCase {
 		Assert.assertEquals(2, resultsAction.getResult().getFailCount());
 	}
 }
+*/
