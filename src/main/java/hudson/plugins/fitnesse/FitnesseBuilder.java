@@ -301,7 +301,7 @@ public class FitnesseBuilder extends Builder {
 			if (Boolean.parseBoolean(startFitnesseValue)) {
 				return newFitnesseBuilder(startFitnesseValue, 
 						collectFormData(formData, new String[] {
-							JAVA_OPTS, JAVA_WORKING_DIRECTORY, 
+							JAVA_ALTERNATIVE_VM, JAVA_OPTS, JAVA_WORKING_DIRECTORY, 
 							PATH_TO_JAR, PATH_TO_ROOT, FITNESSE_PORT_LOCAL, 
 							TARGET_PAGE, TARGET_IS_SUITE, HTTP_TIMEOUT, PATH_TO_RESULTS
 						})
